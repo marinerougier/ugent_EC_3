@@ -198,7 +198,7 @@
 
   // randomly assigning to the salience vs. no salience condition
   var Cond_salience = jsPsych.data.getURLVariable("Cond_salience");
-  if(Cond_salience == null) {Cond_salience = jsPsych.randomization.sampleWithoutReplacement(["salience", "no_salience"], 1)[0];}
+  if(Cond_salience == null) {Cond_salience = jsPsych.randomization.sampleWithoutReplacement(["no_salience", "salience"], 1)[0];}
 
   var US_high = undefined;
   var US_med  = undefined;
@@ -847,9 +847,26 @@ CSjudge.map(function(ciImg){
         },
     };
 
+  var salience_check = {
+      type: 'survey-multi-choice',
+      questions: [{prompt: "During the experiment, each pair of faces contained one of these three faces (presented below). During the experiment, did you think of these faces in terms of how attractive or unattractive they are?<br>"+"<center><img class='imgitemMemo' src='"+US[0]+"'>"+ "<img class='imgitemMemo' src='"+US[1]+"'>"+ "<img class='imgitemMemo' src='"+US[2]+"'></center>", options: ['Yes', 'No', 'I do not know'], required: true}],
+      button_label: "Continue",
+      on_load: function() {
+          window.scrollTo(0, 0);
+          $(".jspsych-content").css("margin-top", "200px");
+          $(".jspsych-content").css("max-width", "90%");
+        },
+      on_finish: function(data) {
+          jsPsych.data.addProperties({
+              salience_check: JSON.parse(data.responses)["Q0"],
+          });
+      },
+  };
+
+
   var influence_awareness = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "Do you think that the attractiveness of the face presented on the "+USposition+" influenced your judgment of the face presented on the "+CSposition+", when you had to judge it on the personality traits/outcomes?", options: ['Yes', 'No', 'I do not know'], required: true}],
+      questions: [{prompt: "Do you think that the attractiveness of the face presented on the "+USposition+" (the ones we just presented you) influenced your judgment of the face presented on the "+CSposition+", when you had to judge it on the personality traits/outcomes?", options: ['Yes', 'No', 'I do not know'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
@@ -1030,6 +1047,7 @@ switch(Cond_salience) {
                   memory_instr,
                   item_awareness,
                   demand_awareness,
+                  salience_check,
                   influence_awareness,
                   demand_compliance,
                   age,
@@ -1052,6 +1070,7 @@ switch(Cond_salience) {
                   memory_instr,
                   item_awareness,
                   demand_awareness,
+                  salience_check,
                   influence_awareness,
                   demand_compliance,
                   age,
