@@ -847,7 +847,7 @@ CSjudge.map(function(ciImg){
 
   var salience_check = {
       type: 'survey-multi-choice',
-      questions: [{prompt: "During the experiment, each pair of faces contained one of these three faces (presented below). During the experiment, did you think of these faces in terms of how attractive or unattractive they are?<br>"+"<center><img class='imgitemMemo' src='"+US[0]+"'>"+ "<img class='imgitemMemo' src='"+US[1]+"'>"+ "<img class='imgitemMemo' src='"+US[2]+"'></center>", options: ['Yes', 'No', 'I do not know'], required: true}],
+      questions: [{prompt: "In the first part of the study, these faces were always presented on the "+USposition+" . Did you think of these faces in terms of how attractive or unattractive they are?<br>"+"<center><img class='imgitemMemo' src='"+US[0]+"'>"+ "<img class='imgitemMemo' src='"+US[1]+"'>"+ "<img class='imgitemMemo' src='"+US[2]+"'></center>", options: ['Yes', 'No', 'I do not know'], required: true}],
       button_label: "Continue",
       on_load: function() {
           window.scrollTo(0, 0);
